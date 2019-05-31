@@ -5,6 +5,6 @@
 		"target": "es2018"
 	},
 	"files": [
-		"source/webext-detect-page.ts"
+		"source/index.ts"
 	]
 }
