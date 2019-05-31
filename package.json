@@ -1,0 +1,64 @@
+{
+  "name": "webext-detect-page",
+  "version": "0.0.0",
+  "description": "Detects where the current browser extension code is being run. Compatibile with Firefox, Chrome and derivates.",
+  "license": "MIT",
+  "repository": "bfred-it/webext-detect-page",
+  "author": "Federico Brigante <github@bfred.it> (bfred.it)",
+  "keywords": [
+    "background page",
+    "content script",
+    "options page",
+    "browser",
+    "extension",
+    "detect",
+    "is",
+    "where",
+    "webext",
+    "web-ext",
+    "chrome",
+    "firefox"
+  ],
+  "main": "webext-detect-page.js",
+  "files": [
+    "webext-detect-page.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "test": "run-p --silent build test:*",
+    "test:lint": "xo",
+    "prepublish-only": "tsc",
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "xo": {
+    "ignores": [
+      "webext-detect-page.js"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "envs": [
+      "browser",
+      "webextensions"
+    ],
+    "overrides": [
+      {
+        "files": "**/*.ts",
+        "extends": "xo-typescript",
+        "rules": {
+          "@typescript-eslint/camelcase": 0
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^0.3.0",
+    "@types/chrome": "0.0.86",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "eslint-config-xo-typescript": "^0.12.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.5.1",
+    "xo": "*"
+  }
+}
