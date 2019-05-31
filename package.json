@@ -1,6 +1,6 @@
 {
   "name": "webext-detect-page",
-  "version": "0.0.0",
+  "version": "0.9.0",
   "description": "Detects where the current browser extension code is being run. Compatibile with Firefox, Chrome and derivates.",
   "license": "MIT",
   "repository": "bfred-it/webext-detect-page",
