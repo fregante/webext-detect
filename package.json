@@ -24,16 +24,12 @@
     "index.d.ts"
   ],
   "scripts": {
-    "test": "run-p --silent build test:*",
-    "test:lint": "xo",
-    "prepublish-only": "run-p --silent build",
-    "build": "tsc && rollup -c",
+    "test": "xo && tsc",
+    "prepublish-only": "tsc",
+    "build": "tsc",
     "watch": "tsc --watch"
   },
   "xo": {
-    "ignores": [
-      "webext-detect-page.js"
-    ],
     "extensions": [
       "ts"
     ],
@@ -57,9 +53,6 @@
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.11.0",
     "eslint-config-xo-typescript": "^0.12.0",
-    "npm-run-all": "^4.1.5",
-    "rollup": "^1.12.5",
-    "rollup-plugin-typescript": "^1.0.1",
     "typescript": "^3.5.0",
     "xo": "*"
   }
