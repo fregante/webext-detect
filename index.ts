@@ -1,5 +1,3 @@
-// https://github.com/bfred-it/webext-detect-page
-
 export function isBackgroundPage(): boolean {
 	return location.pathname === '/_generated_background_page.html' &&
 		!location.protocol.startsWith('http') &&

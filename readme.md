@@ -1,6 +1,6 @@
 # webext-detect-page
 
-> Detects where the current browser extension code is being run. Compatibile with Firefox, Chrome and derivates.
+> Detects where the current browser extension code is being run. Chrome and Firefox.
 
 [![Travis build status](https://api.travis-ci.com/bfred-it/webext-detect-page.svg?branch=master)](https://travis-ci.com/bfred-it/webext-detect-page)
 [![npm version](https://img.shields.io/npm/v/webext-detect-page.svg)](https://www.npmjs.com/package/webext-detect-page)
