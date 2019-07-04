@@ -1,16 +1,17 @@
-export function isBackgroundPage(): boolean {
-	return location.pathname === '/_generated_background_page.html' &&
-		!location.protocol.startsWith('http') &&
-		Boolean(typeof chrome === 'object' && chrome.runtime);
-}
+const isExtensionContext = typeof chrome === 'object' && chrome && typeof chrome.runtime === 'object';
+const isWeb = location.protocol.startsWith('http');
 
 export function isContentScript(): boolean {
-	return location.protocol.startsWith('http') &&
-		Boolean(typeof chrome === 'object' && chrome.runtime);
+	return isExtensionContext && isWeb;
+}
+
+export function isBackgroundPage(): boolean {
+	return isExtensionContext && !isWeb &&
+		location.pathname === '/_generated_background_page.html';
 }
 
 export function isOptionsPage(): boolean {
-	if (typeof chrome !== 'object' || !chrome.runtime) {
+	if (!isExtensionContext || !chrome.runtime.getManifest) {
 		return false;
 	}
 
