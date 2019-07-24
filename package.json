@@ -2,23 +2,23 @@
   "name": "webext-detect-page",
   "version": "1.0.2",
   "description": "Detects where the current browser extension code is being run. Compatibile with Firefox, Chrome and derivates.",
-  "license": "MIT",
-  "repository": "bfred-it/webext-detect-page",
-  "author": "Federico Brigante <github@bfred.it> (bfred.it)",
   "keywords": [
     "background page",
-    "content script",
-    "options page",
     "browser",
-    "extension",
-    "detect",
-    "is",
-    "where",
-    "webext",
-    "web-ext",
     "chrome",
-    "firefox"
+    "content script",
+    "detect",
+    "extension",
+    "firefox",
+    "is",
+    "options page",
+    "web-ext",
+    "webext",
+    "where"
   ],
+  "repository": "fregante/webext-detect-page",
+  "license": "MIT",
+  "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
   "files": [
     "index.js",
     "index.d.ts",
@@ -26,18 +26,18 @@
   ],
   "module": "module/index.js",
   "scripts": {
-    "test": "xo && tsc",
-    "prepublish-only": "npm run build --silent",
     "build": "tsc && tsc --module es2015 --outDir module --declaration false",
+    "prepublish-only": "npm run build --silent",
+    "test": "xo && tsc",
     "watch": "tsc --watch"
   },
   "xo": {
-    "extensions": [
-      "ts"
-    ],
     "envs": [
       "browser",
       "webextensions"
+    ],
+    "extensions": [
+      "ts"
     ],
     "overrides": [
       {
