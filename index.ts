@@ -1,4 +1,4 @@
-const isExtensionContext = typeof chrome === 'object' && chrome && typeof chrome.runtime === 'object';
+const isExtensionContext = typeof chrome === 'object' && chrome && typeof chrome.extension === 'object';
 const isWeb = location.protocol.startsWith('http');
 
 export function isContentScript(): boolean {
@@ -6,8 +6,9 @@ export function isContentScript(): boolean {
 }
 
 export function isBackgroundPage(): boolean {
-	return isExtensionContext && !isWeb &&
-		location.pathname === '/_generated_background_page.html';
+	return isExtensionContext &&
+		chrome.extension.getBackgroundPage &&
+		chrome.extension.getBackgroundPage() === window;
 }
 
 export function isOptionsPage(): boolean {
