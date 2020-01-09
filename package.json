@@ -9,6 +9,7 @@
     "content script",
     "detect",
     "extension",
+    "context",
     "firefox",
     "is",
     "options page",
