@@ -1,33 +1,24 @@
-# webext-detect-page
+# webext-detect-page [![](https://img.shields.io/npm/v/webext-detect-page.svg)](https://www.npmjs.com/package/webext-detect-page)
 
 > Detects where the current browser extension code is being run. Chrome and Firefox.
 
-[![Travis build status](https://api.travis-ci.com/fregante/webext-detect-page.svg?branch=master)](https://travis-ci.com/fregante/webext-detect-page)
-[![npm version](https://img.shields.io/npm/v/webext-detect-page.svg)](https://www.npmjs.com/package/webext-detect-page)
-
 ## Install
 
-You can just download the [standalone bundle](https://packd.fregante.now.sh/webext-detect-page@latest?name=window) (it might take a minute to download) and include the file in your `manifest.json`, or:
+You can just download the [standalone bundle](https://packd.fregante.now.sh/webext-detect-page@latest?name=window) (it might take a minute to download) and include the file in your `manifest.json`.
 
+Or use `npm`:
 
 ```sh
-npm install --save webext-detect-page
+npm install webext-detect-page
 ```
 
 ```js
+ // This module is only offered as a ES Module
 import {
 	isBackgroundPage,
 	isContentScript,
 	isOptionsPage
 } from 'webext-detect-page';
-```
-
-```js
-const {
-	isBackgroundPage,
-	isContentScript,
-	isOptionsPage
-} = require('webext-detect-page');
 ```
 
 ## Usage
