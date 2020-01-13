@@ -22,10 +22,10 @@
   "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
   "files": [
     "index.js",
-    "index.d.ts",
-    "module/index.js"
+    "index.d.ts"
   ],
-  "module": "module/index.js",
+  "type": "module",
+  "module": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "tsc",
