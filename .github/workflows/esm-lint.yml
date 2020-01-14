@@ -40,7 +40,7 @@ jobs:
         name: package
     - run: npm install ./package parcel
     - run: echo 'import "webext-detect-page"' > index.js
-    - run: ./node_modules/.bin/parcel index.js
+    - run: npx parcel build index.js
     - run: cat dist/index.js
       
   Rollup:
@@ -55,7 +55,7 @@ jobs:
         echo "import resolve from '@rollup/plugin-node-resolve';
           export default {plugins: [resolve()]}" > rollup.config.js
     - run: echo 'import "webext-detect-page"' > index.js
-    - run: ./node_modules/.bin/rollup index.js --config
+    - run: npx rollup index.js --config
 
   Snowpack:
     runs-on: ubuntu-latest
