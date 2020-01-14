@@ -1,0 +1,98 @@
+name: ESM
+
+on:
+  - pull_request
+  - push
+
+jobs:
+
+  Pack:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: npm install
+    - run: npm run build --if-present
+    - run: npm pack --dry-run
+    - run: npm pack --silent 2>/dev/null | xargs cat | tar -xz
+    - uses: actions/upload-artifact@v1
+      with:
+        name: package
+        path: package
+
+  Webpack:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: npm install ./package
+    - run: echo 'import "webext-detect-page"' > index.js
+    - run: webpack index.js
+    - run: cat dist/main.js
+
+  Parcel:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: npm install ./package parcel
+    - run: echo 'import "webext-detect-page"' > index.js
+    - run: ./node_modules/.bin/parcel index.js
+    - run: cat dist/index.js
+      
+  Rollup:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: npm install ./package rollup @rollup/plugin-node-resolve
+    - run: |
+        echo "import resolve from '@rollup/plugin-node-resolve';
+          export default {plugins: [resolve()]}" > rollup.config.js
+    - run: echo 'import "webext-detect-page"' > index.js
+    - run: ./node_modules/.bin/rollup index.js --config
+
+  Snowpack:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: echo '{}' > package.json
+    - run: echo 'import "webext-detect-page"' > index.js
+    - run: npm install ./package
+    - run: npx snowpack index.js
+    - run: cat web_modules/webext-detect-page.js
+
+  Node:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '13.x'
+    - run: "echo '{\"type\": \"module\"}' > package.json"
+    - run: echo 'import "webext-detect-page/index.js"' > index.js
+    - run: npm install ./package
+    - run: node index.js
+
+  TypeScript:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: npm install ./package
+    - run: echo 'import "webext-detect-page"' > index.ts
+    - run: tsc index.ts
+    - run: cat index.js
