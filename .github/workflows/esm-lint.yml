@@ -38,7 +38,7 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: package
-    - run: npm install ./package parcel
+    - run: npm install ./package
     - run: echo 'import "webext-detect-page"' > index.js
     - run: npx parcel build index.js
     - run: cat dist/index.js
@@ -70,6 +70,18 @@ jobs:
     - run: npx snowpack index.js
     - run: cat web_modules/webext-detect-page.js
 
+  TypeScript:
+    runs-on: ubuntu-latest
+    needs: Pack
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: package
+    - run: npm install ./package
+    - run: echo 'import "webext-detect-page"' > index.ts
+    - run: tsc index.ts
+    - run: cat index.js
+
   Node:
     runs-on: ubuntu-latest
     needs: Pack
@@ -84,15 +96,3 @@ jobs:
     - run: echo 'import "webext-detect-page/index.js"' > index.js
     - run: npm install ./package
     - run: node index.js
-
-  TypeScript:
-    runs-on: ubuntu-latest
-    needs: Pack
-    steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: package
-    - run: npm install ./package
-    - run: echo 'import "webext-detect-page"' > index.ts
-    - run: tsc index.ts
-    - run: cat index.js
