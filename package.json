@@ -20,12 +20,13 @@
   "repository": "fregante/webext-detect-page",
   "license": "MIT",
   "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
   "files": [
     "index.js",
     "index.d.ts"
   ],
-  "type": "module",
-  "module": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "tsc",
