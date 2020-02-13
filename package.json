@@ -53,11 +53,11 @@
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.7.0",
-    "@types/chrome": "0.0.91",
-    "@typescript-eslint/eslint-plugin": "^2.15.0",
-    "@typescript-eslint/parser": "^2.15.0",
-    "eslint-config-xo-typescript": "^0.24.1",
-    "typescript": "^3.7.4",
-    "xo": "^0.25.3"
+    "@types/chrome": "0.0.95",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
+    "eslint-config-xo-typescript": "^0.26.0",
+    "typescript": "^3.7.5",
+    "xo": "^0.26.0"
   }
 }
