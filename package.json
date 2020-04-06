@@ -38,26 +38,14 @@
       "browser",
       "webextensions"
     ],
-    "extensions": [
-      "ts"
-    ],
-    "overrides": [
-      {
-        "files": "**/*.ts",
-        "extends": "xo-typescript",
-        "rules": {
-          "@typescript-eslint/camelcase": 0
-        }
-      }
-    ]
+    "rules": {
+      "@typescript-eslint/camelcase": 0
+    }
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.7.0",
-    "@types/chrome": "0.0.95",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
-    "eslint-config-xo-typescript": "^0.26.0",
-    "typescript": "^3.7.5",
-    "xo": "^0.26.0"
+    "@types/chrome": "0.0.103",
+    "typescript": "^3.8.3",
+    "xo": "^0.28.3"
   }
 }
