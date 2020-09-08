@@ -1,6 +1,6 @@
 const isExtensionContext = typeof chrome === 'object' && chrome && typeof chrome.extension === 'object';
 const globalWindow = typeof window === 'object' ? window : undefined;
-const isWeb = location.protocol.startsWith('http');
+const isWeb = typeof location === 'object' && location.protocol.startsWith('http');
 
 export function isContentScript(): boolean {
 	return isExtensionContext && isWeb;
