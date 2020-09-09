@@ -29,8 +29,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "tsc",
-    "test": "xo && tsc",
+    "prepack": "tsc --sourceMap false",
+    "test": "xo && tsc --noEmit",
     "watch": "tsc --watch"
   },
   "xo": {
