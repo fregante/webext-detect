@@ -7,8 +7,10 @@ export function isContentScript(): boolean {
 }
 
 export function isBackgroundPage(): boolean {
-	return isExtensionContext &&
-		chrome.extension.getBackgroundPage?.() === globalWindow;
+	return isExtensionContext && (
+		location.pathname === '/_generated_background_page.html' ||
+		chrome.extension?.getBackgroundPage?.() === globalWindow
+	);
 }
 
 export function isOptionsPage(): boolean {
