@@ -4,7 +4,7 @@
 
 ## Install
 
-You can just download the [standalone bundle](https://packd.fregante.now.sh/webext-detect-page@latest?name=window) (it might take a minute to download) and include the file in your `manifest.json`.
+You can download the [standalone bundle](https://bundle.fregante.com/?pkg=webext-detect-page&global=window) and include it in your `manifest.json`.
 
 Or use `npm`:
 
