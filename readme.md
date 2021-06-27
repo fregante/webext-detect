@@ -59,6 +59,10 @@ Returns a `boolean` that indicates whether the code is being run in a content sc
 
 Returns a `boolean` that indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json`.
 
+#### isDevToolsPage()
+
+Returns a `boolean`  that indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field.
+
 ## Testing
 
 The calls are automatically cached so, if you're using this in a test environment, import and call this function first to ensure that the environment is "detected" every time:
