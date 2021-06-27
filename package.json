@@ -30,7 +30,7 @@
 	"scripts": {
 		"build": "tsc",
 		"prepack": "tsc --sourceMap false",
-		"test": "xo && tsc --noEmit",
+		"test": "xo && tsc && node index.js",
 		"watch": "tsc --watch"
 	},
 	"xo": {

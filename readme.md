@@ -37,7 +37,15 @@ if (isBackgroundPage()) {
 
 ## API
 
-Read the note about [testing](#testing) if you're running this code in a tester.
+The functions are only ever evaluated once. This protects from future "invalidated context" errors.Read the note about [testing](#testing) if you're running this code in a tester.
+
+#### isWebPage()
+
+Returns a `boolean` that indicates whether the code is being run on `http(s)://` pages (it could be in a content script or regular web context).
+
+#### isExtensionContext()
+
+Returns a `boolean` that indicates whether the code is being run in extension contexts that have access to the chrome API.
 
 #### isBackgroundPage()
 
@@ -49,7 +57,7 @@ Returns a `boolean` that indicates whether the code is being run in a content sc
 
 #### isOptionsPage()
 
-Returns a `boolean` that indicates whether the code is being run in an options page. This only works if the URL matches the one specified in the extension's `manifest.json`
+Returns a `boolean` that indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json`.
 
 ## Testing
 
