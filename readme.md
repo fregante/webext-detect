@@ -60,4 +60,4 @@ Returns a `boolean` that indicates whether the code is being run in an options p
 
 ## License
 
-MIT © [Federico Brigante](https://bfred.it)
+MIT © [Federico Brigante](https://fregante.com)
