@@ -37,6 +37,8 @@ if (isBackgroundPage()) {
 
 ## API
 
+Read the note about [testing](#testing) if you're running this code in a tester.
+
 #### isBackgroundPage()
 
 Returns a `boolean` that indicates whether the code is being run in a background page.
@@ -48,6 +50,15 @@ Returns a `boolean` that indicates whether the code is being run in a content sc
 #### isOptionsPage()
 
 Returns a `boolean` that indicates whether the code is being run in an options page. This only works if the URL matches the one specified in the extension's `manifest.json`
+
+## Testing
+
+The calls are automatically cached so, if you're using this in a test environment, import and call this function first to ensure that the environment is "detected" every time:
+
+```js
+import {disableWebextDetectPageCache} from 'webext-detect-page';
+disableWebextDetectPageCache();
+```
 
 ## Related
 

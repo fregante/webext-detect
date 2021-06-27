@@ -2,18 +2,34 @@ const isExtensionContext = typeof chrome === 'object' && chrome && typeof chrome
 const globalWindow = typeof window === 'object' ? window : undefined;
 const isWeb = typeof location === 'object' && location.protocol.startsWith('http');
 
-export function isContentScript(): boolean {
-	return isExtensionContext && isWeb;
+let cache = true;
+export function disableWebextDetectPageCache(): void {
+	cache = false;
 }
 
-export function isBackgroundPage(): boolean {
+function once(function_: () => boolean): () => boolean {
+	let result: boolean;
+	return () => {
+		if (!cache || typeof result === 'undefined') {
+			result = function_();
+		}
+
+		return result;
+	};
+}
+
+export const isContentScript = once((): boolean => {
+	return isExtensionContext && isWeb;
+});
+
+export const isBackgroundPage = once((): boolean => {
 	return isExtensionContext && (
 		location.pathname === '/_generated_background_page.html' ||
 		chrome.extension?.getBackgroundPage?.() === globalWindow
 	);
-}
+});
 
-export function isOptionsPage(): boolean {
+export const isOptionsPage = once((): boolean => {
 	if (!isExtensionContext || !chrome.runtime.getManifest) {
 		return false;
 	}
@@ -27,4 +43,4 @@ export function isOptionsPage(): boolean {
 
 	return url.pathname === location.pathname &&
 		url.origin === location.origin;
-}
+});
