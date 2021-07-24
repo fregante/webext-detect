@@ -1,8 +1,8 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"target": "es2018",
-		"module": "es2015"
+		"target": "es2020",
+		"module": "es2020"
 	},
 	"files": [
 		"index.ts"
