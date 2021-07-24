@@ -51,3 +51,18 @@ export const isOptionsPage = once((): boolean => {
 	const url = new URL(options_ui.page, location.origin);
 	return url.pathname === location.pathname;
 });
+
+/** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
+export const isDevToolsPage = once((): boolean => {
+	if (!isExtensionContext() || !chrome.runtime.getManifest) {
+		return false;
+	}
+
+	const {devtools_page} = chrome.runtime.getManifest();
+	if (devtools_page !== 'string') {
+		return false;
+	}
+
+	const url = new URL(devtools_page, location.origin);
+	return url.pathname === location.pathname;
+});
