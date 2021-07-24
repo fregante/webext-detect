@@ -29,7 +29,7 @@
 	],
 	"scripts": {
 		"build": "tsc",
-		"prepack": "tsc --sourceMap false",
+		"prepare": "tsc --sourceMap false",
 		"test": "xo && tsc && node index.js",
 		"watch": "tsc --watch"
 	},
@@ -44,8 +44,8 @@
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^1.0.2",
-		"@types/chrome": "0.0.145",
-		"typescript": "^4.3.4",
-		"xo": "^0.40.3"
+		"@types/chrome": "0.0.148",
+		"typescript": "^4.3.5",
+		"xo": "^0.42.0"
 	}
 }
