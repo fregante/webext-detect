@@ -61,7 +61,13 @@ Returns a `boolean` that indicates whether the code is being run in an options p
 
 #### isDevToolsPage()
 
-Returns a `boolean`  that indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field.
+Returns a `boolean` that indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field.
+
+#### isChrome()
+#### isFirefox()
+#### isSafari()
+
+Return a `boolean` if it matches the current browser. They are loose detections based on the user agent that are useful when developing Web Extensions.
 
 ## Testing
 
