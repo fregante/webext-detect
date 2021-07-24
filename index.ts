@@ -67,12 +67,11 @@ export const isDevToolsPage = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
-
 /** Loosely detect Firefox via user agent */
-export const isFirefox = () => globalThis.navigator?.userAgent.includes("Firefox");
+export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
 
 /** Loosely detect Chrome via user agent (might also include Chromium and forks like Opera) */
-export const isChrome = () => globalThis.navigator?.userAgent.includes("Chrome");
+export const isChrome = () => globalThis.navigator?.userAgent.includes('Chrome');
 
 /** Loosely detect Safari via user agent */
-export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.includes("Safari");
+export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.includes('Safari');
