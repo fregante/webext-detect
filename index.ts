@@ -44,7 +44,7 @@ export const isOptionsPage = once((): boolean => {
 	}
 
 	const {options_ui} = chrome.runtime.getManifest();
-	if (options_ui?.page !== 'string') {
+	if (typeof options_ui?.page !== 'string') {
 		return false;
 	}
 
@@ -59,7 +59,7 @@ export const isDevToolsPage = once((): boolean => {
 	}
 
 	const {devtools_page} = chrome.runtime.getManifest();
-	if (devtools_page !== 'string') {
+	if (typeof devtools_page !== 'string') {
 		return false;
 	}
 
