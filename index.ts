@@ -54,7 +54,7 @@ export const isOptionsPage = once((): boolean => {
 
 /** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isDevToolsPage = once((): boolean => {
-	if (!isExtensionContext() || !chrome.runtime.getManifest) {
+	if (!isExtensionContext() || !chrome.devtools) {
 		return false;
 	}
 
