@@ -37,7 +37,7 @@ if (isBackgroundPage()) {
 
 ## API
 
-The functions are only ever evaluated once. This protects from future "invalidated context" errors.Read the note about [testing](#testing) if you're running this code in a tester.
+The functions are only ever evaluated once. This protects from future "invalidated context" errors. Read the note about [testing](#testing) if you're running this code in a tester.
 
 #### isWebPage()
 
@@ -67,7 +67,19 @@ Returns a `boolean` that indicates whether the code is being run in a dev tools 
 #### isFirefox()
 #### isSafari()
 
-Return a `boolean` if it matches the current browser. They are loose detections based on the user agent that are useful when developing Web Extensions.
+Returns a `boolean` if it matches the current browser. They are loose detections based on the user agent that are useful when developing Web Extensions.
+
+#### getContextName()
+
+Returns the first matching context among those defined in `index.ts`, depending on the current context:
+
+- 'contentScript'
+- 'backgroundPage'
+- 'options'
+- 'devToolsPage'
+- 'extension'
+- 'web'
+- 'unknown'
 
 ## Testing
 
