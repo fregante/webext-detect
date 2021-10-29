@@ -43,12 +43,12 @@ export const isOptionsPage = once((): boolean => {
 		return false;
 	}
 
-	const {options_ui} = chrome.runtime.getManifest();
-	if (typeof options_ui?.page !== 'string') {
+	const {options_ui: optionsUi} = chrome.runtime.getManifest();
+	if (typeof optionsUi?.page !== 'string') {
 		return false;
 	}
 
-	const url = new URL(options_ui.page, location.origin);
+	const url = new URL(optionsUi.page, location.origin);
 	return url.pathname === location.pathname;
 });
 
@@ -58,12 +58,12 @@ export const isDevToolsPage = once((): boolean => {
 		return false;
 	}
 
-	const {devtools_page} = chrome.runtime.getManifest();
-	if (typeof devtools_page !== 'string') {
+	const {devtools_page: devtoolsPage} = chrome.runtime.getManifest();
+	if (typeof devtoolsPage !== 'string') {
 		return false;
 	}
 
-	const url = new URL(devtools_page, location.origin);
+	const url = new URL(devtoolsPage, location.origin);
 	return url.pathname === location.pathname;
 });
 
