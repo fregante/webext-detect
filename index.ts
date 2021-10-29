@@ -75,3 +75,25 @@ export const isChrome = () => globalThis.navigator?.userAgent.includes('Chrome')
 
 /** Loosely detect Safari via user agent */
 export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.includes('Safari');
+
+const contextNames = {
+	contentScript: isContentScript,
+	backgroundPage: isBackgroundPage,
+	options: isOptionsPage,
+	devToolsPage: isDevToolsPage,
+	extension: isExtensionContext,
+	web: isWebPage,
+} as const;
+
+type ContextName = keyof typeof contextNames;
+type BooleanFunction = () => boolean;
+
+export function getContextName(): ContextName | 'unknown' {
+	for (const [name, test] of Object.entries(contextNames) as Array<[ContextName, BooleanFunction]>) {
+		if (test()) {
+			return name;
+		}
+	}
+
+	return 'unknown';
+}
