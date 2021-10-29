@@ -37,10 +37,7 @@
 		"envs": [
 			"browser",
 			"webextensions"
-		],
-		"rules": {
-			"@typescript-eslint/camelcase": 0
-		}
+		]
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^2.0.0",
