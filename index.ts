@@ -56,15 +56,23 @@ export const isBackground = (): boolean => isBackgroundPage() || isBackgroundWor
 export const isBackgroundPage = once((): boolean => {
 	const manifest = getManifest(2);
 
-	if (manifest && isCurrentPathname(manifest.background_page || manifest.background?.page)) {
+	if (
+		manifest
+		&& isCurrentPathname(manifest.background_page || manifest.background?.page)
+	) {
 		return true;
 	}
 
-	return Boolean(manifest?.background?.scripts && isCurrentPathname('/_generated_background_page.html'));
+	return Boolean(
+		manifest?.background?.scripts
+		&& isCurrentPathname('/_generated_background_page.html'),
+	);
 });
 
 /** Indicates whether the code is being run in a background worker */
-export const isBackgroundWorker = once((): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker));
+export const isBackgroundWorker = once(
+	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
+);
 
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => {

@@ -17,7 +17,7 @@ npm install webext-detect-page
 import {
 	isBackgroundPage,
 	isContentScript,
-	isOptionsPage
+	isOptionsPage,
 } from 'webext-detect-page';
 ```
 
