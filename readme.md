@@ -47,9 +47,17 @@ Returns a `boolean` that indicates whether the code is being run on `http(s)://`
 
 Returns a `boolean` that indicates whether the code is being run in extension contexts that have access to the chrome API.
 
+#### isBackground()
+
+Returns a `boolean` that indicates whether the code is being run in a background page or background worker.
+
 #### isBackgroundPage()
 
-Returns a `boolean` that indicates whether the code is being run in a background page.
+Returns a `boolean` that indicates whether the code is being run in a background page (manifest v2).
+
+#### isBackgroundWorker()
+
+Returns a `boolean` that indicates whether the code is being run in a background worker (manifest v3).
 
 #### isContentScript()
 
