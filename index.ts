@@ -3,6 +3,26 @@ export function disableWebextDetectPageCache(): void {
 	cache = false;
 }
 
+function isCurrentPathname(path?: string): boolean {
+	if (!path) {
+		return false;
+	}
+
+	try {
+		const {pathname} = new URL(path, location.origin);
+		return pathname === location.pathname;
+	} catch {
+		return false;
+	}
+}
+
+/** Internal utility just to get the right manifest type. Chrome seems to accept workers even on v2 */
+function getManifest(version: 2): chrome.runtime.ManifestV2 | void;
+function getManifest(version: 3): chrome.runtime.ManifestV3 | void;
+function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | void {
+	return globalThis.chrome?.runtime?.getManifest?.();
+}
+
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
@@ -29,12 +49,29 @@ export const isContentScript = once((): boolean =>
 	isExtensionContext() && isWebPage(),
 );
 
+/** Indicates whether the code is being run in a background context */
+export const isBackground = (): boolean => isBackgroundPage() || isBackgroundWorker();
+
 /** Indicates whether the code is being run in a background page */
-export const isBackgroundPage = once((): boolean =>
-	isExtensionContext() && (
-		location.pathname === '/_generated_background_page.html'
-		|| chrome.extension?.getBackgroundPage?.() === globalThis.window
-	),
+export const isBackgroundPage = once((): boolean => {
+	const manifest = getManifest(2);
+
+	if (
+		manifest
+		&& isCurrentPathname(manifest.background_page || manifest.background?.page)
+	) {
+		return true;
+	}
+
+	return Boolean(
+		manifest?.background?.scripts
+		&& isCurrentPathname('/_generated_background_page.html'),
+	);
+});
+
+/** Indicates whether the code is being run in a background worker */
+export const isBackgroundWorker = once(
+	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
 );
 
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
@@ -78,7 +115,7 @@ export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.inc
 
 const contextNames = {
 	contentScript: isContentScript,
-	backgroundPage: isBackgroundPage,
+	background: isBackground,
 	options: isOptionsPage,
 	devToolsPage: isDevToolsPage,
 	extension: isExtensionContext,

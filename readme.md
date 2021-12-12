@@ -17,7 +17,7 @@ npm install webext-detect-page
 import {
 	isBackgroundPage,
 	isContentScript,
-	isOptionsPage
+	isOptionsPage,
 } from 'webext-detect-page';
 ```
 
@@ -47,9 +47,17 @@ Returns a `boolean` that indicates whether the code is being run on `http(s)://`
 
 Returns a `boolean` that indicates whether the code is being run in extension contexts that have access to the chrome API.
 
+#### isBackground()
+
+Returns a `boolean` that indicates whether the code is being run in a background page or background worker.
+
 #### isBackgroundPage()
 
-Returns a `boolean` that indicates whether the code is being run in a background page.
+Returns a `boolean` that indicates whether the code is being run in a background page (manifest v2).
+
+#### isBackgroundWorker()
+
+Returns a `boolean` that indicates whether the code is being run in a background worker (manifest v3).
 
 #### isContentScript()
 
@@ -74,7 +82,7 @@ Returns a `boolean` if it matches the current browser. They are loose detections
 Returns the first matching context among those defined in `index.ts`, depending on the current context:
 
 - 'contentScript'
-- 'backgroundPage'
+- 'background'
 - 'options'
 - 'devToolsPage'
 - 'extension'
