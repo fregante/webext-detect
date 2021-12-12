@@ -74,7 +74,7 @@ Returns a `boolean` if it matches the current browser. They are loose detections
 Returns the first matching context among those defined in `index.ts`, depending on the current context:
 
 - 'contentScript'
-- 'backgroundPage'
+- 'background'
 - 'options'
 - 'devToolsPage'
 - 'extension'

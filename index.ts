@@ -107,7 +107,7 @@ export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.inc
 
 const contextNames = {
 	contentScript: isContentScript,
-	backgroundPage: isBackgroundPage,
+	background: isBackground,
 	options: isOptionsPage,
 	devToolsPage: isDevToolsPage,
 	extension: isExtensionContext,
