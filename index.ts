@@ -1,3 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+declare const WEBEXT_WEB_PAGE: boolean | undefined;
+declare const WEBEXT_EXTENSION_CONTEXT: boolean | undefined;
+declare const WEBEXT_CONTENT_SCRIPT: boolean | undefined;
+declare const WEBEXT_BACKGROUND: boolean | undefined;
+declare const WEBEXT_BACKGROUND_PAGE: boolean | undefined;
+declare const WEBEXT_BACKGROUND_WORKER: boolean | undefined;
+declare const WEBEXT_OPTIONS_PAGE: boolean | undefined;
+declare const WEBEXT_DEV_TOOLS_PAGE: boolean | undefined;
+/* eslint-enable @typescript-eslint/naming-convention */
+
 let cache = true;
 export function disableWebextDetectPageCache(): void {
 	cache = false;
@@ -35,74 +46,90 @@ function once(function_: () => boolean): () => boolean {
 }
 
 /** Indicates whether the code is being run on http(s):// pages (it could be in a content script or regular web context) */
-export const isWebPage = once((): boolean =>
-	globalThis.location?.protocol.startsWith('http'),
-);
+export const isWebPage = typeof WEBEXT_WEB_PAGE === 'boolean'
+	? () => WEBEXT_WEB_PAGE
+	: once((): boolean =>
+		globalThis.location?.protocol.startsWith('http'),
+	);
 
 /** Indicates whether the code is being run in extension contexts that have access to the chrome API */
-export const isExtensionContext = once((): boolean =>
-	typeof globalThis.chrome?.extension === 'object',
-);
+export const isExtensionContext = typeof WEBEXT_EXTENSION_CONTEXT === 'boolean'
+	? () => WEBEXT_EXTENSION_CONTEXT
+	: once((): boolean =>
+		typeof globalThis.chrome?.extension === 'object',
+	);
 
 /** Indicates whether the code is being run in a content script */
-export const isContentScript = once((): boolean =>
-	isExtensionContext() && isWebPage(),
-);
+export const isContentScript = typeof WEBEXT_CONTENT_SCRIPT === 'boolean'
+	? () => WEBEXT_CONTENT_SCRIPT
+	: once((): boolean =>
+		isExtensionContext() && isWebPage(),
+	);
 
 /** Indicates whether the code is being run in a background context */
-export const isBackground = (): boolean => isBackgroundPage() || isBackgroundWorker();
+export const isBackground = typeof WEBEXT_BACKGROUND === 'boolean'
+	? () => WEBEXT_BACKGROUND
+	: (): boolean => isBackgroundPage() || isBackgroundWorker();
 
 /** Indicates whether the code is being run in a background page */
-export const isBackgroundPage = once((): boolean => {
-	const manifest = getManifest(2);
+export const isBackgroundPage = typeof WEBEXT_BACKGROUND_PAGE === 'boolean'
+	? () => WEBEXT_BACKGROUND_PAGE
+	: once((): boolean => {
+		const manifest = getManifest(2);
 
-	if (
-		manifest
+		if (
+			manifest
 		&& isCurrentPathname(manifest.background_page || manifest.background?.page)
-	) {
-		return true;
-	}
+		) {
+			return true;
+		}
 
-	return Boolean(
-		manifest?.background?.scripts
+		return Boolean(
+			manifest?.background?.scripts
 		&& isCurrentPathname('/_generated_background_page.html'),
-	);
-});
+		);
+	});
 
 /** Indicates whether the code is being run in a background worker */
-export const isBackgroundWorker = once(
-	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
-);
+export const isBackgroundWorker = typeof WEBEXT_BACKGROUND_WORKER === 'boolean'
+	? () => WEBEXT_BACKGROUND_WORKER
+	: once(
+		(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
+	);
 
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
-export const isOptionsPage = once((): boolean => {
-	if (!isExtensionContext() || !chrome.runtime.getManifest) {
-		return false;
-	}
+export const isOptionsPage = typeof WEBEXT_OPTIONS_PAGE === 'boolean'
+	? () => WEBEXT_OPTIONS_PAGE
+	: once((): boolean => {
+		if (!isExtensionContext() || !chrome.runtime.getManifest) {
+			return false;
+		}
 
-	const {options_ui: optionsUi} = chrome.runtime.getManifest();
-	if (typeof optionsUi?.page !== 'string') {
-		return false;
-	}
+		const {options_ui: optionsUi} = chrome.runtime.getManifest();
+		if (typeof optionsUi?.page !== 'string') {
+			return false;
+		}
 
-	const url = new URL(optionsUi.page, location.origin);
-	return url.pathname === location.pathname;
-});
+		const url = new URL(optionsUi.page, location.origin);
+		return url.pathname === location.pathname;
+	});
 
 /** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
-export const isDevToolsPage = once((): boolean => {
-	if (!isExtensionContext() || !chrome.devtools) {
-		return false;
-	}
+export const isDevToolsPage = typeof WEBEXT_DEV_TOOLS_PAGE === 'boolean'
+	? () => WEBEXT_DEV_TOOLS_PAGE
+	: once((): boolean => {
+		if (!isExtensionContext() || !chrome.devtools) {
+			return false;
+		}
 
-	const {devtools_page: devtoolsPage} = chrome.runtime.getManifest();
-	if (typeof devtoolsPage !== 'string') {
-		return false;
-	}
+		const {devtools_page: devtoolsPage} = chrome.runtime.getManifest();
+		if (typeof devtoolsPage !== 'string') {
+			return false;
+		}
 
-	const url = new URL(devtoolsPage, location.origin);
-	return url.pathname === location.pathname;
-});
+		const url = new URL(devtoolsPage, location.origin);
+		return url.pathname === location.pathname;
+	});
 
 /** Loosely detect Firefox via user agent */
 export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
