@@ -113,7 +113,7 @@ export const isChrome = () => globalThis.navigator?.userAgent.includes('Chrome')
 /** Loosely detect Safari via user agent */
 export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.includes('Safari');
 
-const contextNames = {
+export const contextNames = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,
