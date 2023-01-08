@@ -29,7 +29,7 @@ import {isBackgroundPage} from 'webext-detect-page';
 if (isBackgroundPage()) {
 	// Run background code, e.g.
 	browser.runtime.onMessage.addListener(console.log);
-} else if (isContentScript) {
+} else if (isContentScript()) {
 	// Run content script code, e.g.
 	browser.runtime.sendMessage('wow!');
 }
