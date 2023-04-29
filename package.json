@@ -1,6 +1,6 @@
 {
 	"name": "webext-detect-page",
-	"version": "4.0.1",
+	"version": "4.1.0",
 	"description": "Detects where the current browser extension code is being run. Compatible with Firefox, Chrome and derivates.",
 	"keywords": [
 		"background page",
