@@ -74,6 +74,7 @@ Returns a `boolean` that indicates whether the code is being run in a dev tools 
 #### isChrome()
 #### isFirefox()
 #### isSafari()
+#### isMobileSafari()
 
 Returns a `boolean` if it matches the current browser. They are loose detections based on the user agent that are useful when developing Web Extensions.
 

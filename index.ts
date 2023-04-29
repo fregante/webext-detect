@@ -113,6 +113,9 @@ export const isChrome = () => globalThis.navigator?.userAgent.includes('Chrome')
 /** Loosely detect Safari via user agent */
 export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.includes('Safari');
 
+/** Loosely detect Mobile Safari via user agent */
+export const isMobileSafari = () => isSafari() && globalThis.navigator?.userAgent.includes('Mobile');
+
 export const contextNames = {
 	contentScript: isContentScript,
 	background: isBackground,
