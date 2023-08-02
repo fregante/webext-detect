@@ -26,7 +26,7 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | void {
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
-		if (!cache || typeof result === 'undefined') {
+		if (!cache || result === undefined) {
 			result = function_();
 		}
 
@@ -36,7 +36,7 @@ function once(function_: () => boolean): () => boolean {
 
 /** Indicates whether the code is being run on http(s):// pages (it could be in a content script or regular web context) */
 export const isWebPage = once((): boolean =>
-	globalThis.location?.protocol.startsWith('http'),
+	['about:', 'http:', 'https:'].includes(location.protocol),
 );
 
 /** Indicates whether the code is being run in extension contexts that have access to the chrome API */
@@ -58,7 +58,7 @@ export const isBackgroundPage = once((): boolean => {
 
 	if (
 		manifest
-		&& isCurrentPathname(manifest.background_page || manifest.background?.page)
+		&& isCurrentPathname(manifest.background_page ?? manifest.background?.page)
 	) {
 		return true;
 	}
