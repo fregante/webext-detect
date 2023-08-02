@@ -26,7 +26,7 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | void {
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
-		if (!cache || typeof result === 'undefined') {
+		if (!cache || result === undefined) {
 			result = function_();
 		}
 
@@ -58,7 +58,7 @@ export const isBackgroundPage = once((): boolean => {
 
 	if (
 		manifest
-		&& isCurrentPathname(manifest.background_page || manifest.background?.page)
+		&& isCurrentPathname(manifest.background_page ?? manifest.background?.page)
 	) {
 		return true;
 	}
