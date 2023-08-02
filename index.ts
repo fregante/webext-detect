@@ -36,7 +36,7 @@ function once(function_: () => boolean): () => boolean {
 
 /** Indicates whether the code is being run on http(s):// pages (it could be in a content script or regular web context) */
 export const isWebPage = once((): boolean =>
-	globalThis.location?.protocol.startsWith('http'),
+	['about:', 'http:', 'https:'].includes(location.protocol),
 );
 
 /** Indicates whether the code is being run in extension contexts that have access to the chrome API */
