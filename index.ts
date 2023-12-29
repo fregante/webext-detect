@@ -86,17 +86,6 @@ export const isOptionsPage = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
-/** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
-export const isDevToolsPage = once((): boolean => {
-	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
-	if (typeof devtoolsPage !== 'string') {
-		return false;
-	}
-
-	const url = new URL(devtoolsPage, location.origin);
-	return url.pathname === location.pathname;
-});
-
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Not yet in @types/chrome
@@ -108,6 +97,20 @@ export const isSidePanel = once((): boolean => {
 	const url = new URL(path, location.origin);
 	return url.pathname === location.pathname;
 });
+
+/** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
+export const isDevToolsPage = once((): boolean => {
+	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
+	if (typeof devtoolsPage !== 'string') {
+		return false;
+	}
+
+	const url = new URL(devtoolsPage, location.origin);
+	return url.pathname === location.pathname;
+});
+
+/** Indicates whether the code is being run in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
+export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 
 /** Loosely detect Firefox via user agent */
 export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
@@ -125,6 +128,8 @@ export const contextNames = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,
+	sidePanel: isSidePanel,
+	devTools: isDevTools,
 	devToolsPage: isDevToolsPage,
 	extension: isExtensionContext,
 	web: isWebPage,
