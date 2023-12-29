@@ -128,6 +128,8 @@ export const contextNames = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,
+	sidePanel: isSidePanel,
+	devTools: isDevTools,
 	devToolsPage: isDevToolsPage,
 	extension: isExtensionContext,
 	web: isWebPage,
