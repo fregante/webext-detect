@@ -17,9 +17,10 @@ function isCurrentPathname(path?: string): boolean {
 }
 
 /** Internal utility just to get the right manifest type. Chrome seems to accept workers even on v2 */
-function getManifest(version: 2): chrome.runtime.ManifestV2 | void;
-function getManifest(version: 3): chrome.runtime.ManifestV3 | void;
-function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | void {
+function getManifest(version: 2): chrome.runtime.ManifestV2 | undefined;
+function getManifest(version: 3): chrome.runtime.ManifestV3 | undefined;
+function getManifest(): chrome.runtime.Manifest | undefined;
+function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | undefined {
 	return globalThis.chrome?.runtime?.getManifest?.();
 }
 
@@ -76,31 +77,35 @@ export const isBackgroundWorker = once(
 
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => {
-	if (!isExtensionContext() || !chrome.runtime.getManifest) {
+	const path = getManifest()?.options_ui?.page;
+	if (typeof path !== 'string') {
 		return false;
 	}
 
-	const {options_ui: optionsUi} = chrome.runtime.getManifest();
-	if (typeof optionsUi?.page !== 'string') {
-		return false;
-	}
-
-	const url = new URL(optionsUi.page, location.origin);
+	const url = new URL(path, location.origin);
 	return url.pathname === location.pathname;
 });
 
 /** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isDevToolsPage = once((): boolean => {
-	if (!isExtensionContext() || !chrome.devtools) {
-		return false;
-	}
-
-	const {devtools_page: devtoolsPage} = chrome.runtime.getManifest();
+	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
 	if (typeof devtoolsPage !== 'string') {
 		return false;
 	}
 
 	const url = new URL(devtoolsPage, location.origin);
+	return url.pathname === location.pathname;
+});
+
+/** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
+export const isSidePanel = once((): boolean => {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Not yet in @types/chrome
+	const path = getManifest(3)?.['side_panel']?.default_path;
+	if (typeof path !== 'string') {
+		return false;
+	}
+
+	const url = new URL(path, location.origin);
 	return url.pathname === location.pathname;
 });
 
