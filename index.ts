@@ -75,6 +75,9 @@ export const isBackgroundWorker = once(
 	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
 );
 
+/** Indicates whether the code is being run in a persistent background page (as opposed to an Event Page or Background Worker, both of which can be unloaded by the browser) */
+export const isPersistentBackgroundPage = (): boolean => isBackgroundPage() && getManifest(2)?.background?.persistent !== false;
+
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => {
 	const path = getManifest()?.options_ui?.page;
