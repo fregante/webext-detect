@@ -138,7 +138,7 @@ export const contextNames = {
 	web: isWebPage,
 } as const;
 
-type ContextName = keyof typeof contextNames;
+export type ContextName = keyof typeof contextNames;
 type BooleanFunction = () => boolean;
 
 export function getContextName(): ContextName | 'unknown' {
