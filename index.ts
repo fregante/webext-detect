@@ -127,7 +127,7 @@ export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.inc
 /** Loosely detect Mobile Safari via user agent */
 export const isMobileSafari = () => isSafari() && globalThis.navigator?.userAgent.includes('Mobile');
 
-export const contextNames = {
+const contextChecks = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,
@@ -138,11 +138,13 @@ export const contextNames = {
 	web: isWebPage,
 } as const;
 
-export type ContextName = keyof typeof contextNames;
+export type ContextName = keyof typeof contextChecks;
+export const contextNames = Object.keys(contextChecks) as ContextName[];
+
 type BooleanFunction = () => boolean;
 
 export function getContextName(): ContextName | 'unknown' {
-	for (const [name, test] of Object.entries(contextNames) as Array<[ContextName, BooleanFunction]>) {
+	for (const [name, test] of Object.entries(contextChecks) as Array<[ContextName, BooleanFunction]>) {
 		if (test()) {
 			return name;
 		}
