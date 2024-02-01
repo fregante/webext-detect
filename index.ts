@@ -76,7 +76,11 @@ export const isBackgroundWorker = once(
 );
 
 /** Indicates whether the code is being run in a persistent background page (as opposed to an Event Page or Background Worker, both of which can be unloaded by the browser) */
-export const isPersistentBackgroundPage = (): boolean => isBackgroundPage() && getManifest(2)?.background?.persistent !== false;
+export const isPersistentBackgroundPage = once((): boolean =>
+	isBackgroundPage()
+	&& getManifest(2)?.manifest_version === 2 // Firefox can have a background page on MV3, but can't be persistent
+	&& getManifest(2)?.background?.persistent !== false,
+);
 
 /** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => {
