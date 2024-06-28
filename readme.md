@@ -1,15 +1,17 @@
-# webext-detect-page [![](https://img.shields.io/npm/v/webext-detect-page.svg)](https://www.npmjs.com/package/webext-detect-page)
+# webext-detect [![](https://img.shields.io/npm/v/webext-detect.svg)](https://www.npmjs.com/package/webext-detect)
 
-> Detects where the current browser extension code is being run. Chrome and Firefox.
+> Detects where the current browser extension code is being run.
+
+> This package was recently renamed from `webext-detect-page` to `webext-detect`
 
 ## Install
 
-You can download the [standalone bundle](https://bundle.fregante.com/?pkg=webext-detect-page&global=window) and include it in your `manifest.json`.
+You can download the [standalone bundle](https://bundle.fregante.com/?pkg=webext-detect&global=window) and include it in your `manifest.json`.
 
 Or use `npm`:
 
 ```sh
-npm install webext-detect-page
+npm install webext-detect
 ```
 
 ```js
@@ -18,13 +20,13 @@ import {
 	isBackgroundPage,
 	isContentScript,
 	isOptionsPage,
-} from 'webext-detect-page';
+} from 'webext-detect';
 ```
 
 ## Usage
 
 ```js
-import {isBackgroundPage} from 'webext-detect-page';
+import {isBackgroundPage} from 'webext-detect';
 
 if (isBackgroundPage()) {
 	// Run background code, e.g.
@@ -95,7 +97,7 @@ Returns the first matching context among those defined in `index.ts`, depending 
 The calls are automatically cached so, if you're using this in a test environment, import and call this function first to ensure that the environment is "detected" every time:
 
 ```js
-import {disableWebextDetectPageCache} from 'webext-detect-page';
+import {disableWebextDetectPageCache} from 'webext-detect';
 disableWebextDetectPageCache();
 ```
 

@@ -1,5 +1,5 @@
 {
-	"name": "webext-detect-page",
+	"name": "webext-detect",
 	"version": "5.0.1",
 	"description": "Detects where the current browser extension code is being run. Compatible with Firefox, Chrome and derivates.",
 	"keywords": [
@@ -17,7 +17,7 @@
 		"webext",
 		"where"
 	],
-	"repository": "fregante/webext-detect-page",
+	"repository": "fregante/webext-detect",
 	"funding": "https://github.com/sponsors/fregante",
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
