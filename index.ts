@@ -45,6 +45,9 @@ export const isExtensionContext = once((): boolean =>
 	typeof globalThis.chrome?.extension === 'object',
 );
 
+/** Indicates whether the code is being run in a sandboxed page (-extension:// URL protocol, but no chrome.* API access) */
+export const isSandboxedPage = once((): boolean => location.protocol.endsWith('-extension:') && !isExtensionContext());
+
 /** Indicates whether the code is being run in a content script */
 export const isContentScript = once((): boolean =>
 	isExtensionContext() && isWebPage(),
