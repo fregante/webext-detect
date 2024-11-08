@@ -42,7 +42,7 @@ export const isWebPage = once((): boolean =>
 
 /** Indicates whether the code is being run in extension contexts that have access to the chrome API */
 export const isExtensionContext = once((): boolean =>
-	typeof globalThis.chrome?.extension === 'object',
+	typeof globalThis.chrome?.runtime?.id === 'string',
 );
 
 /** Indicates whether the code is being run in a sandboxed page (-extension:// URL protocol, but no chrome.* API access) */
@@ -122,6 +122,13 @@ export const isDevToolsPage = once((): boolean => {
 /** Indicates whether the code is being run in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
 export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 
+/** Indicates whether the code is being run in a document created via chrome.offscreen */
+export const isOffscreenDocument = once((): boolean =>
+	isExtensionContext()
+		&& 'document' in globalThis
+		&& globalThis.chrome?.extension === undefined,
+);
+
 /** Loosely detect Firefox via user agent */
 export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
 
@@ -141,6 +148,7 @@ const contextChecks = {
 	sidePanel: isSidePanel,
 	devTools: isDevTools,
 	devToolsPage: isDevToolsPage,
+	offscreenDocument: isOffscreenDocument,
 	extension: isExtensionContext,
 	web: isWebPage,
 } as const;
