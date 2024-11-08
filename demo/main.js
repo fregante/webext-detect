@@ -4,33 +4,25 @@ import './init/context-menu.js';
 import './init/devtools-tab.js';
 import './init/offscreen.js';
 
-const table = Object.entries(detect)
-	.filter(([key, exported]) => typeof exported === 'function' && key !== 'disableWebextDetectPageCache')
+const results = Object.entries(detect)
+	.filter(([key, exported]) => typeof exported === 'function' && key !== 'disableWebextDetectPageCache' && key !== 'getContextName')
 	.map(([key, detection]) => [key, detection()])
-	.sort(([keyA, resultA], [keyB, resultB]) => {
-		if (resultA === resultB) {
-			return keyA.localeCompare(keyB);
-		}
+	.sort(([, a], [, b]) => a === b ? 0 : (a ? -1 : 1))
+	.map(([key, result]) => result === true ? `✅ ${key}` : (result === false ? `❌ ${key}` : `${key}(): ${result}`));
 
-		return resultA === true ? -1 : 1;
-	});
+console.group(`contextName: ${detect.getContextName()}`);
+for (const result of results) {
+	console.log(result);
+}
 
-console.table(table);
+console.groupEnd();
 
 if ('document' in globalThis) {
 	globalThis.document.body.insertAdjacentHTML('beforeend', `
 		<fieldset>
-			<legend>${detect.getContextName()}</legend>
+			<legend>contextName: ${detect.getContextName()}</legend>
 			<ul>
-				${table.map(([key, result]) => `
-					<li>
-						<span>
-							${result === true ? '✅' : (result === false ? '❌' : '')}
-							${key}
-							${typeof result === 'string' ? `: ${result}` : ''}
-						</span>
-					</li>
-				`).join('')}
+				${results.map(result => `<li>${result}</li>`).join('')}
 			</ul>
 		</fieldset>
 	`);
