@@ -154,6 +154,7 @@ const contextChecks = {
 	devToolsPage: isDevToolsPage,
 	offscreenDocument: isOffscreenDocument,
 	extension: isExtensionContext,
+	sandbox: isSandboxedPage,
 	web: isWebPage,
 } as const;
 
