@@ -95,6 +95,15 @@ export const isSidePanel = once((): boolean =>
 	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path),
 );
 
+export const isActionPopup = once((): boolean => {
+	// Chrome-only; Firefox uses the whole window…
+	if (globalThis.outerHeight - globalThis.innerHeight === 14) {
+		return true;
+	}
+
+	return isCurrentPathname(getManifest(3)?.action?.default_popup ?? getManifest(2)?.browser_action?.default_popup);
+});
+
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isMainDevToolsPage = once((): boolean =>
 	isExtensionContext()
@@ -133,6 +142,7 @@ const contextChecks = {
 	background: isBackground,
 	options: isOptionsPage,
 	sidePanel: isSidePanel,
+	actionPopup: isActionPopup,
 	devTools: isDevTools,
 	devToolsPage: isDevToolsPage,
 	offscreenDocument: isOffscreenDocument,
