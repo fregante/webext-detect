@@ -24,6 +24,7 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | undefined {
 	return globalThis.chrome?.runtime?.getManifest?.();
 }
 
+/* @__PURE__ */
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
@@ -86,38 +87,20 @@ export const isPersistentBackgroundPage = once((): boolean =>
 );
 
 /** Indicates whether you're in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
-export const isOptionsPage = once((): boolean => {
-	const path = getManifest()?.options_ui?.page;
-	if (typeof path !== 'string') {
-		return false;
-	}
-
-	const url = new URL(path, location.origin);
-	return url.pathname === location.pathname;
-});
+export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()?.options_ui?.page));
 
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
-export const isSidePanel = once((): boolean => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Not yet in @types/chrome
-	const path = getManifest(3)?.['side_panel']?.default_path;
-	if (typeof path !== 'string') {
-		return false;
-	}
-
-	const url = new URL(path, location.origin);
-	return url.pathname === location.pathname;
-});
+export const isSidePanel = once((): boolean =>
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Not yet in @types/chrome
+	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path),
+);
 
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
-export const isMainDevToolsPage = once((): boolean => {
-	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
-	if (typeof devtoolsPage !== 'string') {
-		return false;
-	}
-
-	const url = new URL(devtoolsPage, location.origin);
-	return url.pathname === location.pathname;
-});
+export const isMainDevToolsPage = once((): boolean =>
+	isExtensionContext()
+		&& Boolean(chrome.devtools)
+		&& isCurrentPathname(getManifest()?.devtools_page),
+);
 
 // TODO: When dropping this, also rename the `devToolsPage` context name below
 /** @deprecated Use `isMainDevToolsPage` instead */

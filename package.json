@@ -38,6 +38,7 @@
 	},
 	"xo": {
 		"rules": {
+			"n/no-unsupported-features/node-builtins": "off",
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{
@@ -52,10 +53,10 @@
 		"@parcel/config-webextension": "^2.12.1-canary.3358",
 		"@parcel/resolver-default": "^2.0.0-canary.1735",
 		"@sindresorhus/tsconfig": "^6.0.0",
-		"@types/chrome": "^0.0.268",
+		"@types/chrome": "^0.0.280",
 		"parcel": "^2.0.0-canary.1733",
-		"typescript": "^5.5.2",
-		"xo": "^0.58.0"
+		"typescript": "^5.6.3",
+		"xo": "^0.59.3"
 	},
 	"engines": {
 		"node": ">=18"
