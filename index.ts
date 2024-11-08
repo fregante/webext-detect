@@ -24,6 +24,7 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | undefined {
 	return globalThis.chrome?.runtime?.getManifest?.();
 }
 
+/* @__PURE__ */
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
@@ -108,6 +109,21 @@ export const isSidePanel = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
+export const isActionPopup = once((): boolean => {
+	// Chrome-only; Firefox uses the whole window…
+	if (globalThis.outerHeight - globalThis.innerHeight === 14) {
+		return true;
+	}
+
+	const path = getManifest(3)?.action?.default_popup ?? getManifest(2)?.browser_action?.default_popup;
+	if (typeof path !== 'string') {
+		return false;
+	}
+
+	const url = new URL(path, location.origin);
+	return url.pathname === location.pathname;
+});
+
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isMainDevToolsPage = once((): boolean => {
 	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
@@ -150,6 +166,7 @@ const contextChecks = {
 	background: isBackground,
 	options: isOptionsPage,
 	sidePanel: isSidePanel,
+	actionPopup: isActionPopup,
 	devTools: isDevTools,
 	devToolsPage: isDevToolsPage,
 	offscreenDocument: isOffscreenDocument,
