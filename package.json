@@ -30,6 +30,8 @@
 	],
 	"scripts": {
 		"build": "tsc",
+		"demo:build": "NODE_NO_WARNINGS=1 parcel build --no-cache",
+		"demo:watch": "NODE_NO_WARNINGS=1 parcel watch --no-cache --no-hmr",
 		"prepare": "tsc --sourceMap false",
 		"test": "xo && tsc && node index.js",
 		"watch": "tsc --watch"
@@ -47,12 +49,36 @@
 		}
 	},
 	"devDependencies": {
+		"@parcel/config-webextension": "^2.12.1-canary.3358",
+		"@parcel/resolver-default": "^2.0.0-canary.1735",
 		"@sindresorhus/tsconfig": "^6.0.0",
 		"@types/chrome": "^0.0.268",
+		"parcel": "^2.0.0-canary.1733",
 		"typescript": "^5.5.2",
 		"xo": "^0.58.0"
 	},
 	"engines": {
 		"node": ">=18"
+	},
+	"@parcel/resolver-default": {
+		"packageExports": true
+	},
+	"targets": {
+		"main": false,
+		"default": {
+			"source": "demo/manifest.json",
+			"distDir": "./distribution",
+			"sourceMap": {
+				"inline": true
+			}
+		}
+	},
+	"webExt": {
+		"sourceDir": "distribution",
+		"run": {
+			"startUrl": [
+				"https://example.com"
+			]
+		}
 	}
 }

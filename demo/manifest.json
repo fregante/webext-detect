@@ -1,0 +1,47 @@
+{
+	"$schema": "https://json.schemastore.org/chrome-manifest",
+	"manifest_version": 3,
+	"name": "webext-detect",
+	"version": "0.0.0",
+	"description": "Demonstrates the webext-detect module",
+	"permissions": [
+		"contextMenus",
+		"sidePanel",
+		"offscreen"
+	],
+	"background": {
+		"service_worker": "main.js",
+		"type": "module",
+		"scripts": ["main.js"]
+	},
+	"action": {
+		"default_popup": "action.html"
+	},
+	"options_ui": {
+		"page": "options.html"
+	},
+	"devtools_page": "main.html",
+	"side_panel": {
+		"default_path": "sidepanel.html"
+	},
+	"sandbox": {
+		"pages": ["sandbox.html"]
+	},
+	"web_accessible_resources": [
+    {
+      "resources": [ "sandbox.html" ],
+      "matches": [ "https://*/*" ]
+    }
+  ],
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["main.js"]
+		},
+		{
+			"world": "MAIN",
+			"matches": ["<all_urls>"],
+			"js": ["mainworld.js"]
+		}
+	]
+}
