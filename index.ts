@@ -87,7 +87,7 @@ export const isPersistentBackgroundPage = once((): boolean =>
 );
 
 /** Indicates whether you're in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
-export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()?.options_ui?.page));
+export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()?.options_ui?.page ?? getManifest()?.options_page));
 
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean =>
