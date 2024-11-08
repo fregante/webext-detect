@@ -108,8 +108,8 @@ export const isSidePanel = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
-/** Indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field. */
-export const isDevToolsPage = once((): boolean => {
+/** Indicates whether the code is being run in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
+export const isMainDevToolsPage = once((): boolean => {
 	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
 	if (typeof devtoolsPage !== 'string') {
 		return false;
@@ -118,6 +118,10 @@ export const isDevToolsPage = once((): boolean => {
 	const url = new URL(devtoolsPage, location.origin);
 	return url.pathname === location.pathname;
 });
+
+// TODO: When dropping this, also rename the `devToolsPage` context name below
+/** @deprecated Use `isMainDevToolsPage` instead */
+export const isDevToolsPage = isMainDevToolsPage;
 
 /** Indicates whether the code is being run in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
 export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
