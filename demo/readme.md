@@ -5,6 +5,11 @@
 
 ## Available context and how to open them
 
+Open any website:
+
+- Content script
+- Content script in the main world
+
 Click the extension icon in the toolbar:
 
 - Popup
