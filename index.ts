@@ -40,52 +40,52 @@ export const isWebPage = once((): boolean =>
 	['about:', 'http:', 'https:'].includes(location.protocol),
 );
 
-/** Indicates whether the code is being run in extension contexts that have access to the chrome API */
+/** Indicates whether you're in extension contexts that have access to the chrome API */
 export const isExtensionContext = once((): boolean =>
 	typeof globalThis.chrome?.runtime?.id === 'string',
 );
 
-/** Indicates whether the code is being run in a sandboxed page (-extension:// URL protocol, but no chrome.* API access) */
+/** Indicates whether you're in a sandboxed page (-extension:// URL protocol, but no chrome.* API access) */
 export const isSandboxedPage = once((): boolean => location.protocol.endsWith('-extension:') && !isExtensionContext());
 
-/** Indicates whether the code is being run in a content script */
+/** Indicates whether you're in a content script. Note that the MAIN world is not considered a content script. */
 export const isContentScript = once((): boolean =>
 	isExtensionContext() && isWebPage(),
 );
 
-/** Indicates whether the code is being run in a background context */
+/** Indicates whether you're in a background context */
 export const isBackground = (): boolean => isBackgroundPage() || isBackgroundWorker();
 
-/** Indicates whether the code is being run in a background page */
+/** Indicates whether you're in a background page */
 export const isBackgroundPage = once((): boolean => {
 	const manifest = getManifest(2);
+	if (!manifest) {
+		return false;
+	}
 
-	if (
-		manifest
-		&& isCurrentPathname(manifest.background_page ?? manifest.background?.page)
-	) {
+	if (isCurrentPathname(manifest.background_page ?? manifest.background?.page)) {
 		return true;
 	}
 
 	return Boolean(
-		manifest?.background?.scripts
+		manifest.background?.scripts
 		&& isCurrentPathname('/_generated_background_page.html'),
 	);
 });
 
-/** Indicates whether the code is being run in a background worker */
+/** Indicates whether you're in a background worker */
 export const isBackgroundWorker = once(
 	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
 );
 
-/** Indicates whether the code is being run in a persistent background page (as opposed to an Event Page or Background Worker, both of which can be unloaded by the browser) */
+/** Indicates whether you're in a persistent background page (as opposed to an Event Page or Background Worker, both of which can be unloaded by the browser) */
 export const isPersistentBackgroundPage = once((): boolean =>
 	isBackgroundPage()
 	&& getManifest(2)?.manifest_version === 2 // Firefox can have a background page on MV3, but can't be persistent
 	&& getManifest(2)?.background?.persistent !== false,
 );
 
-/** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
+/** Indicates whether you're in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => {
 	const path = getManifest()?.options_ui?.page;
 	if (typeof path !== 'string') {
@@ -96,7 +96,7 @@ export const isOptionsPage = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
-/** Indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
+/** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Not yet in @types/chrome
 	const path = getManifest(3)?.['side_panel']?.default_path;
@@ -108,7 +108,7 @@ export const isSidePanel = once((): boolean => {
 	return url.pathname === location.pathname;
 });
 
-/** Indicates whether the code is being run in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
+/** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isMainDevToolsPage = once((): boolean => {
 	const devtoolsPage = isExtensionContext() && chrome.devtools && getManifest()?.devtools_page;
 	if (typeof devtoolsPage !== 'string') {
@@ -123,10 +123,10 @@ export const isMainDevToolsPage = once((): boolean => {
 /** @deprecated Use `isMainDevToolsPage` instead */
 export const isDevToolsPage = isMainDevToolsPage;
 
-/** Indicates whether the code is being run in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
+/** Indicates whether you're in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
 export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 
-/** Indicates whether the code is being run in a document created via chrome.offscreen */
+/** Indicates whether you're in a document created via chrome.offscreen */
 export const isOffscreenDocument = once((): boolean =>
 	isExtensionContext()
 		&& 'document' in globalThis
@@ -163,6 +163,7 @@ export const contextNames = Object.keys(contextChecks) as ContextName[];
 
 type BooleanFunction = () => boolean;
 
+/** Returns the first matching context among those defined in `ContextName`, depending on the current context. Returns "unknown" if no match is found. */
 export function getContextName(): ContextName | 'unknown' {
 	for (const [name, test] of Object.entries(contextChecks) as Array<[ContextName, BooleanFunction]>) {
 		if (test()) {

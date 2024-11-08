@@ -14,21 +14,12 @@ Or use `npm`:
 npm install webext-detect
 ```
 
-```js
-// This module is only offered as a ES Module
-import {
-	isBackgroundPage,
-	isContentScript,
-	isOptionsPage,
-} from 'webext-detect';
-```
-
 ## Usage
 
 ```js
-import {isBackgroundPage} from 'webext-detect';
+import {isBackground, isContentScript} from 'webext-detect';
 
-if (isBackgroundPage()) {
+if (isBackground()) {
 	// Run background code, e.g.
 	browser.runtime.onMessage.addListener(console.log);
 } else if (isContentScript()) {
@@ -41,56 +32,9 @@ if (isBackgroundPage()) {
 
 The functions are only ever evaluated once. This protects from future "invalidated context" errors. Read the note about [testing](#testing) if you're running this code in a tester.
 
-#### isWebPage()
+To see all the available functions, check the [index.d.ts](https://www.unpkg.com/browse/webext-detect/index.d.ts) file.
 
-Returns a `boolean` that indicates whether the code is being run on `http(s)://` pages (it could be in a content script or regular web context).
-
-#### isExtensionContext()
-
-Returns a `boolean` that indicates whether the code is being run in extension contexts that have access to the chrome API.
-
-#### isBackground()
-
-Returns a `boolean` that indicates whether the code is being run in a background page or background worker.
-
-#### isBackgroundPage()
-
-Returns a `boolean` that indicates whether the code is being run in a background page (manifest v2).
-
-#### isBackgroundWorker()
-
-Returns a `boolean` that indicates whether the code is being run in a background worker (manifest v3).
-
-#### isContentScript()
-
-Returns a `boolean` that indicates whether the code is being run in a content script.
-
-#### isOptionsPage()
-
-Returns a `boolean` that indicates whether the code is being run in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json`.
-
-#### isDevToolsPage()
-
-Returns a `boolean` that indicates whether the code is being run in a dev tools page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` `devtools_page` field.
-
-#### isChrome()
-#### isFirefox()
-#### isSafari()
-#### isMobileSafari()
-
-Returns a `boolean` if it matches the current browser. They are loose detections based on the user agent that are useful when developing Web Extensions.
-
-#### getContextName()
-
-Returns the first matching context among those defined in `index.ts`, depending on the current context:
-
-- 'contentScript'
-- 'background'
-- 'options'
-- 'devToolsPage'
-- 'extension'
-- 'web'
-- 'unknown'
+There are also a few helper functions based on the useragent string to loosely detect the current browser: `isChrome()`, `isFirefox()`, `isSafari()`, `isMobileSafari()`. They are not intended to detect forks, but just the main engines.
 
 ## Testing
 
@@ -105,10 +49,8 @@ disableWebextDetectPageCache();
 
 - [webext-options-sync](https://github.com/fregante/webext-options-sync) - Helps you manage and autosave your extension's options.
 - [webext-storage-cache](https://github.com/fregante/webext-storage-cache) - Map-like promised cache storage with expiration.
-- [webext-permission-toggle](https://github.com/fregante/webext-permission-toggle) - Browser-action context menu to request permission for the current tab.
-- [webext-dynamic-content-scripts](https://github.com/fregante/webext-dynamic-content-scripts) - Automatically inject your `content_scripts` on custom domains.
-- [webext-content-script-ping](https://github.com/fregante/webext-content-script-ping) - One-file interface to detect whether your content script have loaded.
-- [`Awesome WebExtensions`](https://github.com/fregante/Awesome-WebExtensions): A curated list of awesome resources for Web Extensions development
+- [webext-patterns](https://github.com/fregante/webext-patterns) - Utilities for patterns and globs.
+- [More…](https://github.com/fregante/webext-fun)
 
 ## License
 
