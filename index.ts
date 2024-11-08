@@ -24,7 +24,6 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | undefined {
 	return globalThis.chrome?.runtime?.getManifest?.();
 }
 
-/* @__PURE__ */
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {
@@ -115,13 +114,7 @@ export const isActionPopup = once((): boolean => {
 		return true;
 	}
 
-	const path = getManifest(3)?.action?.default_popup ?? getManifest(2)?.browser_action?.default_popup;
-	if (typeof path !== 'string') {
-		return false;
-	}
-
-	const url = new URL(path, location.origin);
-	return url.pathname === location.pathname;
+	return isCurrentPathname(getManifest(3)?.action?.default_popup ?? getManifest(2)?.browser_action?.default_popup);
 });
 
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
