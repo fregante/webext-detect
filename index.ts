@@ -24,7 +24,6 @@ function getManifest(_version?: 2 | 3): chrome.runtime.Manifest | undefined {
 	return globalThis.chrome?.runtime?.getManifest?.();
 }
 
-/* @__PURE__ */
 function once(function_: () => boolean): () => boolean {
 	let result: boolean;
 	return () => {

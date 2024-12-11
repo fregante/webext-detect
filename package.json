@@ -21,6 +21,7 @@
 	"funding": "https://github.com/sponsors/fregante",
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
+	"sideEffects": false,
 	"type": "module",
 	"exports": "./index.js",
 	"types": "./index.d.ts",
