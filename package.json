@@ -51,12 +51,12 @@
 		}
 	},
 	"devDependencies": {
-		"@parcel/config-webextension": "^2.13.2",
-		"@parcel/resolver-default": "^2.13.2",
+		"@parcel/config-webextension": "^2.13.3",
+		"@parcel/resolver-default": "^2.13.3",
 		"@sindresorhus/tsconfig": "^7.0.0",
-		"@types/chrome": "^0.0.287",
-		"parcel": "^2.13.2",
-		"typescript": "^5.7.2",
+		"@types/chrome": "^0.0.299",
+		"parcel": "^2.13.3",
+		"typescript": "^5.7.3",
 		"xo": "^0.60.0"
 	},
 	"engines": {
