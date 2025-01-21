@@ -51,13 +51,13 @@
 		}
 	},
 	"devDependencies": {
-		"@parcel/config-webextension": "^2.12.1-canary.3358",
-		"@parcel/resolver-default": "^2.0.0-canary.1735",
-		"@sindresorhus/tsconfig": "^6.0.0",
-		"@types/chrome": "^0.0.280",
-		"parcel": "^2.0.0-canary.1733",
-		"typescript": "^5.6.3",
-		"xo": "^0.59.3"
+		"@parcel/config-webextension": "^2.13.3",
+		"@parcel/resolver-default": "^2.13.3",
+		"@sindresorhus/tsconfig": "^7.0.0",
+		"@types/chrome": "^0.0.299",
+		"parcel": "^2.13.3",
+		"typescript": "^5.7.3",
+		"xo": "^0.60.0"
 	},
 	"engines": {
 		"node": ">=18"
