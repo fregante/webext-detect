@@ -136,7 +136,7 @@ export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.inc
 /** Loosely detect Mobile Safari via user agent */
 export const isMobileSafari = () => isSafari() && globalThis.navigator?.userAgent.includes('Mobile');
 
-const contextChecks = {
+export const contextChecks = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,
