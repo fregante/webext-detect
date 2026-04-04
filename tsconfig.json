@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"outDir": ".",
 		"types": ["chrome"],
+		"noPropertyAccessFromIndexSignature": false,
 	},
 	"files": [
 		"index.ts"

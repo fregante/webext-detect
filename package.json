@@ -41,6 +41,9 @@
 		"rules": {
 			"n/no-unsupported-features/node-builtins": "off",
 			"@stylistic/curly-newline": "off",
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-deprecated": "off",
+			"@typescript-eslint/no-unsafe-type-assertion": "off",
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{
