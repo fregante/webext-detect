@@ -39,6 +39,7 @@
 	},
 	"xo": {
 		"rules": {
+			"@stylistic/function-paren-newline": "off",
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
 let cache = true;
 export function disableWebextDetectPageCache(): void {
 	cache = false;
@@ -90,7 +91,7 @@ export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()
 
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean =>
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Not yet in @types/chrome
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access -- Not yet in @types/chrome
 	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path),
 );
 
@@ -106,8 +107,8 @@ export const isActionPopup = once((): boolean => {
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isMainDevToolsPage = once((): boolean =>
 	isExtensionContext()
-		&& Boolean(chrome.devtools)
-		&& isCurrentPathname(getManifest()?.devtools_page),
+	&& Boolean(chrome.devtools)
+	&& isCurrentPathname(getManifest()?.devtools_page),
 );
 
 // TODO: When dropping this, also rename the `devToolsPage` context name below
@@ -120,8 +121,8 @@ export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 /** Indicates whether you're in a document created via chrome.offscreen */
 export const isOffscreenDocument = once((): boolean =>
 	isExtensionContext()
-		&& 'document' in globalThis
-		&& globalThis.chrome?.extension === undefined,
+	&& 'document' in globalThis
+	&& globalThis.chrome?.extension === undefined,
 );
 
 /** Loosely detect Firefox via user agent */
@@ -143,7 +144,7 @@ const contextChecks = {
 	sidePanel: isSidePanel,
 	actionPopup: isActionPopup,
 	devTools: isDevTools,
-	devToolsPage: isDevToolsPage,
+	devToolsPage: isDevToolsPage, // eslint-disable-line @typescript-eslint/no-deprecated
 	offscreenDocument: isOffscreenDocument,
 	extension: isExtensionContext,
 	sandbox: isSandboxedPage,
