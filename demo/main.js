@@ -1,5 +1,5 @@
-/* eslint-disable import/no-unassigned-import */
-import * as detect from '../index.ts';
+/* eslint-disable import-x/no-unassigned-import */
+import * as detect from '../index.js';
 import './init/context-menu.js';
 import './init/devtools-tab.js';
 import './init/offscreen.js';
@@ -7,7 +7,7 @@ import './init/offscreen.js';
 const results = Object.entries(detect)
 	.filter(([key, exported]) => typeof exported === 'function' && key !== 'disableWebextDetectPageCache' && key !== 'getContextName')
 	.map(([key, detection]) => [key, detection()])
-	.sort(([, a], [, b]) => a === b ? 0 : (a ? -1 : 1))
+	.toSorted(([, a], [, b]) => a === b ? 0 : (a ? -1 : 1))
 	.map(([key, result]) => result === true ? `✅ ${key}` : (result === false ? `❌ ${key}` : `${key}(): ${result}`));
 
 console.group(`contextName: ${detect.getContextName()}`);

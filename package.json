@@ -39,7 +39,7 @@
 	},
 	"xo": {
 		"rules": {
-			"n/no-unsupported-features/node-builtins": "off",
+			"@stylistic/function-paren-newline": "off",
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{
@@ -53,11 +53,11 @@
 	"devDependencies": {
 		"@parcel/config-webextension": "^2.13.3",
 		"@parcel/resolver-default": "^2.13.3",
-		"@sindresorhus/tsconfig": "^7.0.0",
-		"@types/chrome": "^0.0.299",
+		"@sindresorhus/tsconfig": "^8.1.0",
+		"@types/chrome": "^0.1.39",
 		"parcel": "^2.13.3",
-		"typescript": "^5.7.3",
-		"xo": "^0.60.0"
+		"typescript": "^6.0.2",
+		"xo": "^2.0.2"
 	},
 	"engines": {
 		"node": ">=18"
