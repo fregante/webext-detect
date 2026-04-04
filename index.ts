@@ -37,21 +37,18 @@ function once(function_: () => boolean): () => boolean {
 
 /** Indicates whether the code is being run on http(s):// pages (it could be in a content script or regular web context) */
 export const isWebPage = once((): boolean =>
-	['about:', 'http:', 'https:'].includes(location.protocol),
-);
+	['about:', 'http:', 'https:'].includes(location.protocol));
 
 /** Indicates whether you're in extension contexts that have access to the chrome API */
 export const isExtensionContext = once((): boolean =>
-	typeof globalThis.chrome?.runtime?.id === 'string',
-);
+	typeof globalThis.chrome?.runtime?.id === 'string');
 
 /** Indicates whether you're in a sandboxed page (-extension:// URL protocol, but no chrome.* API access) */
 export const isSandboxedPage = once((): boolean => location.protocol.endsWith('-extension:') && !isExtensionContext());
 
 /** Indicates whether you're in a content script. Note that the MAIN world is not considered a content script. */
 export const isContentScript = once((): boolean =>
-	isExtensionContext() && isWebPage(),
-);
+	isExtensionContext() && isWebPage());
 
 /** Indicates whether you're in a background context */
 export const isBackground = (): boolean => isBackgroundPage() || isBackgroundWorker();
@@ -67,23 +64,18 @@ export const isBackgroundPage = once((): boolean => {
 		return true;
 	}
 
-	return Boolean(
-		manifest.background?.scripts
-		&& isCurrentPathname('/_generated_background_page.html'),
-	);
+	return Boolean(manifest.background?.scripts
+		&& isCurrentPathname('/_generated_background_page.html'));
 });
 
 /** Indicates whether you're in a background worker */
-export const isBackgroundWorker = once(
-	(): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker),
-);
+export const isBackgroundWorker = once((): boolean => isCurrentPathname(getManifest(3)?.background?.service_worker));
 
 /** Indicates whether you're in a persistent background page (as opposed to an Event Page or Background Worker, both of which can be unloaded by the browser) */
 export const isPersistentBackgroundPage = once((): boolean =>
 	isBackgroundPage()
 	&& getManifest(2)?.manifest_version === 2 // Firefox can have a background page on MV3, but can't be persistent
-	&& getManifest(2)?.background?.persistent !== false,
-);
+	&& getManifest(2)?.background?.persistent !== false);
 
 /** Indicates whether you're in an options page. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()?.options_ui?.page ?? getManifest()?.options_page));
@@ -91,8 +83,7 @@ export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean =>
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Not yet in @types/chrome
-	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path),
-);
+	isCurrentPathname(getManifest(3)?.side_panel?.default_path));
 
 export const isActionPopup = once((): boolean => {
 	// Chrome-only; Firefox uses the whole window…
@@ -106,9 +97,8 @@ export const isActionPopup = once((): boolean => {
 /** Indicates whether you're in the main dev tools page, the one specified in the extension's `manifest.json` `devtools_page` field. */
 export const isMainDevToolsPage = once((): boolean =>
 	isExtensionContext()
-		&& Boolean(chrome.devtools)
-		&& isCurrentPathname(getManifest()?.devtools_page),
-);
+	&& Boolean(chrome.devtools)
+	&& isCurrentPathname(getManifest()?.devtools_page));
 
 // TODO: When dropping this, also rename the `devToolsPage` context name below
 /** @deprecated Use `isMainDevToolsPage` instead */
@@ -120,9 +110,8 @@ export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 /** Indicates whether you're in a document created via chrome.offscreen */
 export const isOffscreenDocument = once((): boolean =>
 	isExtensionContext()
-		&& 'document' in globalThis
-		&& globalThis.chrome?.extension === undefined,
-);
+	&& 'document' in globalThis
+	&& globalThis.chrome?.extension === undefined);
 
 /** Loosely detect Firefox via user agent */
 export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
