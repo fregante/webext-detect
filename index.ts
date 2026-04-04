@@ -82,8 +82,8 @@ export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()
 
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean =>
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Not yet in @types/chrome
-	isCurrentPathname(getManifest(3)?.side_panel?.default_path));
+	// eslint-disable-next-line @typescript-eslint/dot-notation, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access -- `side_panel` is not in @types/chrome, accessed via index signature
+	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path));
 
 export const isActionPopup = once((): boolean => {
 	// Chrome-only; Firefox uses the whole window…
@@ -132,6 +132,7 @@ const contextChecks = {
 	sidePanel: isSidePanel,
 	actionPopup: isActionPopup,
 	devTools: isDevTools,
+	// eslint-disable-next-line @typescript-eslint/no-deprecated -- kept for backward compatibility
 	devToolsPage: isDevToolsPage,
 	offscreenDocument: isOffscreenDocument,
 	extension: isExtensionContext,
@@ -140,12 +141,14 @@ const contextChecks = {
 } as const;
 
 export type ContextName = keyof typeof contextChecks;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 export const contextNames = Object.keys(contextChecks) as ContextName[];
 
 type BooleanFunction = () => boolean;
 
 /** Returns the first matching context among those defined in `ContextName`, depending on the current context. Returns "unknown" if no match is found. */
 export function getContextName(): ContextName | 'unknown' {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 	for (const [name, test] of Object.entries(contextChecks) as Array<[ContextName, BooleanFunction]>) {
 		if (test()) {
 			return name;

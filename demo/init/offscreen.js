@@ -1,9 +1,12 @@
 /* global chrome */
 import mainHtmlUrl from 'url:../main.html';
 
-globalThis.chrome?.offscreen?.createDocument({
-	url: mainHtmlUrl,
-	reasons: [chrome.offscreen.Reason.DOM_PARSER],
-	justification: 'Testing',
-}).catch(() => {
-});
+try {
+	await globalThis.chrome?.offscreen?.createDocument({
+		url: mainHtmlUrl,
+		reasons: [chrome.offscreen.Reason.DOM_PARSER],
+		justification: 'Testing',
+	});
+} catch {
+	// ignore
+}

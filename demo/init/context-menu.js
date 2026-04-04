@@ -1,6 +1,6 @@
 /* global chrome */
 import mainHtmlUrl from 'url:../main.html';
-import {isChrome} from '../../index.ts';
+import {isChrome} from '../../index.js';
 
 if (globalThis.chrome?.contextMenus?.create) {
 	chrome.contextMenus.removeAll();
