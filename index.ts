@@ -111,11 +111,7 @@ export const isMainDevToolsPage = once((): boolean =>
 	&& isCurrentPathname(getManifest()?.devtools_page),
 );
 
-// TODO: When dropping this, also rename the `devToolsPage` context name below
-/** @deprecated Use `isMainDevToolsPage` instead */
-export const isDevToolsPage = isMainDevToolsPage;
-
-/** Indicates whether you're in the dev tools page. Unlike `isDevToolsPage`, this works in any page that has the `chrome.devTools` API */
+/** Indicates whether you're in the dev tools page. Unlike `isMainDevToolsPage`, this works in any page that has the `chrome.devTools` API */
 export const isDevTools = () => Boolean(globalThis.chrome?.devtools);
 
 /** Indicates whether you're in a document created via chrome.offscreen */
@@ -144,7 +140,7 @@ const contextChecks = {
 	sidePanel: isSidePanel,
 	actionPopup: isActionPopup,
 	devTools: isDevTools,
-	devToolsPage: isDevToolsPage, // eslint-disable-line @typescript-eslint/no-deprecated
+	mainDevToolsPage: isMainDevToolsPage,
 	offscreenDocument: isOffscreenDocument,
 	extension: isExtensionContext,
 	sandbox: isSandboxedPage,
