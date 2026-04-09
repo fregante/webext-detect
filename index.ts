@@ -64,7 +64,7 @@ export const isBackgroundPage = once((): boolean => {
 		return false;
 	}
 
-	if (isCurrentPathname(manifest.background_page ?? manifest.background?.page)) {
+	if (isCurrentPathname(manifest.background?.page)) {
 		return true;
 	}
 
@@ -91,8 +91,7 @@ export const isOptionsPage = once((): boolean => isCurrentPathname(getManifest()
 
 /** Indicates whether you're in a side panel. This only works if the current page’s URL matches the one specified in the extension's `manifest.json` */
 export const isSidePanel = once((): boolean =>
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access -- Not yet in @types/chrome
-	isCurrentPathname(getManifest(3)?.['side_panel']?.default_path),
+	isCurrentPathname(getManifest(3)?.side_panel?.default_path),
 );
 
 export const isActionPopup = once((): boolean => {

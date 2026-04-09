@@ -54,7 +54,7 @@
 		"@parcel/config-webextension": "^2.13.3",
 		"@parcel/resolver-default": "^2.13.3",
 		"@sindresorhus/tsconfig": "^8.1.0",
-		"@types/chrome": "^0.1.39",
+		"@types/chrome": "^0.1.40",
 		"parcel": "^2.13.3",
 		"typescript": "^6.0.2",
 		"xo": "^2.0.2"
