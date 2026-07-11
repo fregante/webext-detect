@@ -120,6 +120,9 @@ export const isOffscreenDocument = once((): boolean =>
 	&& globalThis.chrome?.extension === undefined,
 );
 
+/** Loosely detect Android via user agent */
+export const isAndroid = () => globalThis.navigator?.userAgent.includes('Android');
+
 /** Loosely detect Firefox via user agent */
 export const isFirefox = () => globalThis.navigator?.userAgent.includes('Firefox');
 
@@ -131,6 +134,9 @@ export const isSafari = () => !isChrome() && globalThis.navigator?.userAgent.inc
 
 /** Loosely detect Mobile Safari via user agent */
 export const isMobileSafari = () => isSafari() && globalThis.navigator?.userAgent.includes('Mobile');
+
+/** Loosely detect Mobile Firefox via user agent */
+export const isMobileFirefox = () => isFirefox() && isAndroid();
 
 const contextChecks = {
 	contentScript: isContentScript,
