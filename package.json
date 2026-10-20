@@ -2,6 +2,31 @@
 	"name": "webext-detect",
 	"version": "6.0.0",
 	"description": "Detects where the current browser extension code is being run. Compatible with Firefox, Chrome and derivates.",
+	"license": "MIT",
+	"repository": "fregante/webext-detect",
+	"funding": "https://github.com/sponsors/fregante",
+	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
+	"type": "module",
+	"exports": {
+		"types": "./index.d.ts",
+		"default": "./index.js"
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=24"
+	},
+	"scripts": {
+		"build": "tsc",
+		"demo:build": "parcel build --no-cache",
+		"demo:watch": "parcel watch --no-cache --no-hmr",
+		"prepare": "tsc --sourceMap false",
+		"test": "xo && tsc && node index.js",
+		"watch": "tsc --watch"
+	},
+	"files": [
+		"index.js",
+		"index.d.ts"
+	],
 	"keywords": [
 		"background page",
 		"browser",
@@ -17,50 +42,19 @@
 		"webext",
 		"where"
 	],
-	"repository": "fregante/webext-detect",
-	"funding": "https://github.com/sponsors/fregante",
-	"license": "MIT",
-	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
-	"sideEffects": false,
-	"type": "module",
-	"exports": "./index.js",
-	"types": "./index.d.ts",
-	"files": [
-		"index.js",
-		"index.d.ts"
-	],
-	"scripts": {
-		"build": "tsc",
-		"demo:build": "parcel build --no-cache",
-		"demo:watch": "parcel watch --no-cache --no-hmr",
-		"prepare": "tsc --sourceMap false",
-		"test": "xo && tsc && node index.js",
-		"watch": "tsc --watch"
+	"devDependencies": {
+		"@parcel/config-webextension": "^2.16.4",
+		"@parcel/resolver-default": "^2.16.4",
+		"@sindresorhus/tsconfig": "^8.1.0",
+		"@types/chrome": "^0.3.5",
+		"parcel": "^2.16.4",
+		"typescript": "^6.0.3",
+		"xo": "^5.0.1"
 	},
 	"xo": {
 		"rules": {
-			"@stylistic/function-paren-newline": "off",
-			"unicorn/prevent-abbreviations": [
-				"error",
-				{
-					"replacements": {
-						"dev": false
-					}
-				}
-			]
+			"@stylistic/function-paren-newline": "off"
 		}
-	},
-	"devDependencies": {
-		"@parcel/config-webextension": "^2.13.3",
-		"@parcel/resolver-default": "^2.13.3",
-		"@sindresorhus/tsconfig": "^8.1.0",
-		"@types/chrome": "^0.1.40",
-		"parcel": "^2.13.3",
-		"typescript": "^6.0.2",
-		"xo": "^2.0.2"
-	},
-	"engines": {
-		"node": ">=24"
 	},
 	"@parcel/resolver-default": {
 		"packageExports": true

@@ -1,4 +1,4 @@
-/* eslint-disable import-x/no-unassigned-import */
+/* eslint-disable import-x/no-unassigned-import -- Imports are side-effect only */
 import * as detect from '../index.js';
 import './init/context-menu.js';
 import './init/devtools-tab.js';
