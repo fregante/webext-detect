@@ -2,16 +2,18 @@ import {contextChecks, getContextName, type ContextName} from './index.js';
 
 type ExtendedContextName = ContextName | `not ${ContextName}`;
 
+/**
+Throws if the current context doesn't match the expected one. Prefix the context name with `not ` to assert the opposite.
+
+@example
+assertContext('background');
+assertContext('not contentScript');
+*/
 export function assertContext(assertion: ExtendedContextName): void {
-	const {groups} = /^(?<not>not )?(?<expectedContext>[a-z]+)$/i.exec(assertion)!;
-	const matchesContext = contextChecks[groups?.['expectedContext'] as ContextName]();
-	if (matchesContext) {
-		if (groups?.['not']) {
-			const currentContext = getContextName();
-			throw new Error(`Expected context to not match ${getContextName(groups?.['expectedContext'])}, but it did match ${currentContext}`);
-		}
-	} else {
-		if (groups?.['not']) {
-			throw new Error(`Expected context to match ${getContextName(groups?.['expectedContext'])}`);
+	const isNegated = assertion.startsWith('not ');
+	const expectedContext = (isNegated ? assertion.slice('not '.length) : assertion) as ContextName;
+
+	if (contextChecks[expectedContext]() === isNegated) {
+		throw new Error(`Expected context ${isNegated ? 'not ' : ''}to be "${expectedContext}", but the current context is "${getContextName()}"`);
 	}
 }
