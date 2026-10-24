@@ -174,7 +174,7 @@ Loosely detect Mobile Firefox via user agent
 */
 export const isMobileFirefox = () => isFirefox() && isAndroid();
 
-const contextChecks = {
+export const contextChecks = {
 	contentScript: isContentScript,
 	background: isBackground,
 	options: isOptionsPage,

@@ -8,8 +8,14 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"type": "module",
 	"exports": {
-		"types": "./index.d.ts",
-		"default": "./index.js"
+		".": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		},
+		"./assert": {
+			"types": "./assert.d.ts",
+			"default": "./assert.js"
+		}
 	},
 	"sideEffects": false,
 	"engines": {
@@ -25,7 +31,9 @@
 	},
 	"files": [
 		"index.js",
-		"index.d.ts"
+		"index.d.ts",
+		"assert.js",
+		"assert.d.ts"
 	],
 	"keywords": [
 		"background page",

@@ -5,6 +5,7 @@
 		"types": ["chrome"],
 	},
 	"files": [
-		"index.ts"
+		"index.ts",
+		"assert.ts"
 	]
 }
