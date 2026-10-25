@@ -11,10 +11,6 @@
 		".": {
 			"types": "./index.d.ts",
 			"default": "./index.js"
-		},
-		"./assert": {
-			"types": "./assert.d.ts",
-			"default": "./assert.js"
 		}
 	},
 	"sideEffects": false,
@@ -31,9 +27,7 @@
 	},
 	"files": [
 		"index.js",
-		"index.d.ts",
-		"assert.js",
-		"assert.d.ts"
+		"index.d.ts"
 	],
 	"keywords": [
 		"background page",

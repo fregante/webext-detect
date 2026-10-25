@@ -10,6 +10,4 @@ logs
 *.map
 index.js
 index.d.ts
-assert.js
-assert.d.ts
 distribution

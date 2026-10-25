@@ -41,7 +41,7 @@ There are also a few helper functions based on the useragent string to loosely d
 Throws if the code isn't running in the expected context. Prefix a context name with `not ` to assert the opposite.
 
 ```js
-import {assertContext} from 'webext-detect/assert';
+import {assertContext} from 'webext-detect';
 
 assertContext('background');
 assertContext('not contentScript');
