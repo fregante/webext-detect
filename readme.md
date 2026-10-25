@@ -36,6 +36,17 @@ To see all the available functions, check the [index.d.ts](https://www.unpkg.com
 
 There are also a few helper functions based on the useragent string to loosely detect the current browser: `isChrome()`, `isFirefox()`, `isSafari()`, `isMobileSafari()`. They are not intended to detect forks, but just the main engines.
 
+### `assertContext`
+
+Throws if the code isn't running in the expected context. Prefix a context name with `not ` to assert the opposite.
+
+```js
+import {assertContext} from 'webext-detect';
+
+assertContext('background');
+assertContext('not contentScript');
+```
+
 ## Testing
 
 The calls are automatically cached so, if you're using this in a test environment, import and call this function first to ensure that the environment is "detected" every time:
